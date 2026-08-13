@@ -1,0 +1,25 @@
+{
+  "name": "mailinaprox",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Sheep26/MailInAProx#readme",
+  "bugs": {
+    "url": "https://github.com/Sheep26/MailInAProx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sheep26/MailInAProx.git"
+  },
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "node ."
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "morgan": "^1.11.0"
+  }
+}

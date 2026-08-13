@@ -1,0 +1,7 @@
+services:
+  mail:
+    image: sheepmail:latest
+    container_name: mail
+    restart: always
+    ports:
+      - "8080:8067"
