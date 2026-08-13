@@ -1,7 +1,7 @@
 services:
   mailinaprox:
     image: mailinaprox:latest
-    container_name: mail
+    container_name: mailinaprox
     restart: always
     ports:
       - "8080:8067"
