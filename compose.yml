@@ -1,6 +1,6 @@
 services:
-  mail:
-    image: sheepmail:latest
+  mailinaprox:
+    image: mailinaprox:latest
     container_name: mail
     restart: always
     ports:
