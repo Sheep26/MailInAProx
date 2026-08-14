@@ -3,7 +3,7 @@ export class Email {
         
     }
 
-    asyncsend(from, to, reply_to, subject, text) {
+    async send(from, to, reply_to, subject, text) {
 
     }
 
