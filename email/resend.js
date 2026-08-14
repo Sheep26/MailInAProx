@@ -31,7 +31,8 @@ export class EmailResend extends Email {
         console.log(`Email ${data.id} has been sent`);
     }
 
-    handle(req) {
-        
+    handle(body) {
+        const { data } = await this.resend.emails.receiving.get(body.email_id);
+        console.log(data);
     }
 }
