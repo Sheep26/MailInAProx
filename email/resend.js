@@ -39,5 +39,6 @@ export class EmailResend extends Email {
             return;
 
         this.database.addEmail(data.to[0], data.from, data.headers['return-path'], JSON.stringify(data.bcc), JSON.stringify(data.cc), data.id, data.message_id, data.html_format, data.subject, data.text);
+        console.log(`Email ${data.id} has been recieved`);
     }
 }
