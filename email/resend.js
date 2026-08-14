@@ -32,9 +32,7 @@ export class EmailResend extends Email {
     }
 
     async handle(body) {
-        console.log(body.data.email_id);
-        console.log(body);
         const { data } = await this.resend.emails.receiving.get(body.data.email_id);
-        console.log(data);
+        console.log(data.text);
     }
 }
