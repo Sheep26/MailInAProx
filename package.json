@@ -1,5 +1,5 @@
 {
-  "name": "mailinaprox",
+  "name": "mailonapi",
   "version": "1.0.0",
   "description": "",
   "homepage": "https://github.com/Sheep26/MailInAProx#readme",
@@ -17,6 +17,7 @@
     "test": "node ."
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "ejs": "^6.0.1",
     "express": "^5.2.1",

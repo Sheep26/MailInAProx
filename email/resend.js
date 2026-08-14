@@ -2,8 +2,8 @@ import { Resend } from 'resend';
 import { Email } from './email.js';
 
 export class EmailResend extends Email {
-    constructor (auth) {
-        super();
+    constructor (database, auth) {
+        super(database, auth);
         this.resend = new Resend(auth);
     }
 

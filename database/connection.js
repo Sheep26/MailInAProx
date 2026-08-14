@@ -1,32 +1,31 @@
 import mysql from "mysql2/promise";
-import config from ".././config.json" with { type: "json" };
+import config from "../config.json" with { type: "json" };
 
 export let db;
 
 export async function setDB(name) {
     db = mysql.createPool({
-        host: config.mysql_host,
-        user: config.mysql_user,
-        password: config.mysql_passwd,
+        host: config.database.mysql_host,
+        user: config.database.mysql_user,
+        password: config.database.mysql_password,
         database: name,
-        port: config.mysql_port
+        port: config.database.mysql_port
     });
+
+    await db.execute('CREATE TABLE IF NOT EXISTS users (user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, firstname TEXT NOT NULL, lastname TEXT NOT NULL, passwd TEXT NOT NULL, email TEXT NOT NULL)');
+    await db.execute('CREATE TABLE IF NOT EXISTS emails (email_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mail_to TEXT NOT NULL, mail_from TEXT NOT NULL, reply_to TEXT NOT NULL, bcc TEXT NOT NULL, cc TEXT NOT NULL, mail_id TEXT NOT NULL, message_id TEXT NOT NULL, html TEXT, content TEXT, html_format TEXT)');
 }
 
 export async function initDB() {
-    const DBNAME = "";
-
     const connection = await mysql.createConnection({
-        host: config.mysql_host,
-        user: config.mysql_user,
-        password: config.mysql_passwd,
-        port: config.mysql_port
+        host: config.database.mysql_host,
+        user: config.database.mysql_user,
+        password: config.database.mysql_password,
+        port: config.database.mysql_port
     });
 
-    await connection.execute(`CREATE DATABASE IF NOT EXISTS \`${DBNAME}\``);
+    await connection.execute(`CREATE DATABASE IF NOT EXISTS \`${config.database.mysql_db}\``);
     await connection.end();
 
-    await setDB(DBNAME);
+    await setDB(config.database.mysql_db);
 }
-
-await initDB();

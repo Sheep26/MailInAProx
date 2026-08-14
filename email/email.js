@@ -1,6 +1,6 @@
 export class Email {
-    constructor (auth) {
-        
+    constructor (database, auth) {
+        this.database = database;
     }
 
     async send(from, to, reply_to, subject, text) {

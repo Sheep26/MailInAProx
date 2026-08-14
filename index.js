@@ -3,11 +3,13 @@ import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import config from "./config.json" with { type: "json" };
 import { email_types } from './email/types.js';
+import { DatabaseManager } from './database/database.js';
 
 const app = express();
 const PORT = config.port | 8080;
 
-const email = new email_types[config.email.type](config.email.auth);
+const database = new DatabaseManager();
+const email = new email_types[config.email.type](database, config.email.auth);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
