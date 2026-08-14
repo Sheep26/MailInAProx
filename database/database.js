@@ -47,9 +47,9 @@ export class DatabaseManager {
     }
 
     async login(email, password) {
-        const user = this.getUserEmail(email);
+        const user = await this.getUserEmail(email);
 
-        if (!hasher.compareHashes(password, user.passwd))
+        if (!user || !hasher.compareHashes(password, user.passwd))
             return null;
 
         const session = new Session(email, 7.884e+9);

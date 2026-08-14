@@ -5,6 +5,8 @@ import config from "./config.json" with { type: "json" };
 import { email_types } from './email/types.js';
 import { DatabaseManager } from './database/database.js';
 import { SessionManager } from './sessions/sessionManager.js';
+import { existsSync } from 'fs';
+import renderUtils from './renderUtils.js';
 
 const app = express();
 const PORT = config.port | 8080;
@@ -27,7 +29,7 @@ app.post('/recieve', (req, res) => {
     res.sendStatus(200);
 });
 
-app.post("/send", async (req, res) => {
+app.post("/api/send", async (req, res) => {
     const session = sessionManager.getSession(req.cookies.session);
 
     if (!session)
@@ -37,7 +39,7 @@ app.post("/send", async (req, res) => {
     await email.send(`${user.username} <${session.user_id}>`, req.body.to, session.user_id, req.body.subject, req.body.content);
 });
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
     const session = database.login(req.body.email, req.body.password);
 
     if (!session)
@@ -48,8 +50,24 @@ app.post('/login', async (req, res) => {
     res.redirect("/");
 });
 
-app.get("/", (req, res) => {
-    res.sendStatus(200);
+app.use(async (req, res, next) => {
+    /*
+    * This function catches all uncaught routes and sends either a 404 for if the content is missing or sends the requested webpage.
+    * The purpose of this is to cut down on unnessacary routes.
+    * All routes that haven't been caught yet will go here, as a result this will get the requested content from the uri and check if it exists.
+    * If it exists, it will return it if not it goes to 404 not found.
+    */
+
+    const page = req.path.replace('/', '') || 'home';
+
+    if (page != 'login' && (!req.cookies.session || !sessionManager.getSession(req.cookies.session)))
+        return res.redirect("/login");
+
+    // Check if requested content exists.
+    if (!existsSync(`templates/${page}.ejs`))
+        return res.status(404).render('base', { title: '404', content: '404', renderUtils: renderUtils });
+
+    res.render('base', { title: page, content: page, renderUtils: renderUtils });
 });
 
 app.listen(PORT, '0.0.0.0', function (err) {
