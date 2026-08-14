@@ -1,0 +1,9 @@
+<script>
+    const payload = {
+        to: "23175@wc.school.nz",
+        subject: "Hello World",
+        content: "Hello World"
+    };
+
+    fetch('/api/send', {method:"POST", headers:{'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
+</script>

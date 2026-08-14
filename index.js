@@ -30,12 +30,12 @@ app.post('/recieve', (req, res) => {
 });
 
 app.post("/api/send", async (req, res) => {
-    const session = sessionManager.getSession(req.cookies.session);
+    const session = await sessionManager.getSession(req.cookies.session);
 
     if (!session)
         return res.sendStatus(401);
 
-    const user = await database.getUserEmail(session.email);
+    const user = await database.getUserEmail(session.user_id);
     await email.send(`${user.username} <${session.user_id}>`, req.body.to, session.user_id, req.body.subject, req.body.content);
 });
 
