@@ -11,7 +11,7 @@ export class Email {
 
     }
 
-    handle(req) {
+    async handle(req) {
 
     }
 }
