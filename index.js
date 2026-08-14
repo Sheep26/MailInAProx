@@ -1,9 +1,13 @@
 import express from 'express';
 import cookieParser from "cookie-parser";
 import morgan from 'morgan';
+import config from "./config.json" with { type: "json" };
+import { Email, EmailResend, email_types } from './email.js';
 
 const app = express();
-const PORT = process.env.PORT | 8080;
+const PORT = config.port | 8080;
+
+const email = new email_types[config.email.type](config.email.auth);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,7 +19,12 @@ app.use(morgan('combined'));
 
 app.post('/recieve', (req, res) => {
     console.log(req.json);
+
     res.sendStatus(200);
+});
+
+app.post("/send", async (req, res) => {
+
 });
 
 app.listen(PORT, '0.0.0.0', function (err) {
