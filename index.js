@@ -29,6 +29,10 @@ app.post("/send", async (req, res) => {
 
 });
 
+app.get("/", (req, res) => {
+    res.sendStatus(200);
+});
+
 app.listen(PORT, '0.0.0.0', function (err) {
     if (err) {
         console.log(err);

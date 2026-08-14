@@ -1,6 +1,13 @@
 import bcrypt from "bcrypt";
 import config from "../config.json" with { type: "json" };
 
+export class BcryptCache {
+    constructor(string, hash) {
+        this.string = passwd;
+        this.hash = hash;
+    }
+}
+
 export class BcryptManager {
     constructor() {
         this.cache = [];
@@ -9,28 +16,21 @@ export class BcryptManager {
     getCache() {
         return this.cache;
     }
-}
 
-export class BcryptCache {
-    constructor(string, hash) {
-        this.string = passwd;
-        this.hash = hash;
+    async hash(string) {
+        return await bcrypt.hash(string, config.salt_rounds);
     }
-}
 
-export async function hash(string) {
-    return await bcrypt.hash(string, config.salt_rounds);
-}
+    async compareHashes(string, hash) {
+        for (let cache_instance of this.cache)
+            if (cache_instance.string == string && cache_instance.hash == hash)
+                return true;
 
-export async function compareHashes(string, hash) {
-    for (let cache_instance of this.cache)
-        if (cache_instance.string == string && cache_instance.hash == hash)
-            return true;
+        let result = await bcrypt.compare(string, hash);
 
-    let result = await bcrypt.compare(string, hash);
+        if (result)
+            this.cache.push(new BcryptCache(string, hash));
 
-    if (result)
-        this.cache.push(new BcryptCache(string, hash));
-
-    return result;
+        return result;
+    }
 }

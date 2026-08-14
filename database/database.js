@@ -1,7 +1,7 @@
 import { db, initDB } from './connection.js';
 import { BcryptManager, BcryptCache } from './encryption.js';
 
-const encryption = new BcryptManager();
+const hasher = new BcryptManager();
 
 export class DatabaseManager {
     constructor() {
@@ -9,7 +9,7 @@ export class DatabaseManager {
     }
 
     async addEmail(to, from, reply_to, bcc, cc, mail_id, message_id, html_format, subject, content) {
-        await db.execute('INSERT INTO emails (mail_to, mail_from, reply_to, bcc, cc, mail_id, message_id, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
+        await db.execute('INSERT INTO emails (mail_to, mail_from, reply_to, bcc, cc, mail_id, message_id, html_format, subject, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             to,
             from,
             reply_to,
@@ -24,10 +24,24 @@ export class DatabaseManager {
     }
 
     async getUsers() {
-        return await db.query("SELECT * FROM users");
+        const [rows] = await db.query("SELECT * FROM users");
+
+        return rows;
     }
 
-    async addUser() {
+    async addUser(username, passwd, email) {
+        const [rows] = await db.query('SELECT email FROM users WHERE email=?', [email]);
 
+        if (rows[0])
+            return false;
+
+        await db.execute('INSERT INTO users (username, passwd, email) VALUES (?, ?, ?)', [username, await hasher.hash(passwd), email]);
+        return true;
+    }
+
+    async getUserEmail(email) {
+        const [rows] = await db.query("SELECT * FROM users WHERE email=?", [email]);
+
+        return rows[0];
     }
 }
