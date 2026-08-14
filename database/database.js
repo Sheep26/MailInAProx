@@ -1,5 +1,6 @@
 import { db, initDB } from './connection.js';
 import { BcryptManager, BcryptCache } from './encryption.js';
+import { Session } from '../sessions/sessionManager.js';
 
 const hasher = new BcryptManager();
 
@@ -43,5 +44,15 @@ export class DatabaseManager {
         const [rows] = await db.query("SELECT * FROM users WHERE email=?", [email]);
 
         return rows[0];
+    }
+
+    async login(email, password) {
+        const user = this.getUserEmail(email);
+
+        if (!hasher.compareHashes(password, user.passwd))
+            return null;
+
+        const session = new Session(email, 7.884e+9);
+        return session;
     }
 }
