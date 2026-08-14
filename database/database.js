@@ -1,4 +1,7 @@
 import { db, initDB } from './connection.js';
+import { BcryptManager, BcryptCache } from './encryption.js';
+
+const encryption = new BcryptManager();
 
 export class DatabaseManager {
     constructor() {
@@ -22,5 +25,9 @@ export class DatabaseManager {
 
     async getUsers() {
         return await db.query("SELECT * FROM users");
+    }
+
+    async addUser() {
+
     }
 }
