@@ -4,9 +4,10 @@
 
         <form class="flex column gap-1-5 centered" action="/api/login" method="POST" onsubmit="checkLogin(event)">
             <%- renderUtils.textField('email', 'Email') %>
-            <%- renderUtils.textField('passwd', 'Password', 'password') %>
+            <%- renderUtils.textField('password', 'Password', 'password') %>
 
             <input type="submit" id="login" value="Login">
+            <span style="display: none;" id="inc-login">Incorrect Login</span>
             <a class="white bold no-decorations" href="/create_account">No account, create one.</a>
         </form>
     </div>
@@ -17,5 +18,28 @@
         event.preventDefault();
 
         document.getElementById("login").classList.add("loading");
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const data = {
+            email: email,
+            password: password
+        }
+
+        const request = await fetch(`/api/valid_login`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (request.status === 200)
+            event.target.submit();
+        else {
+            document.getElementById("inc-login").style.display = "block";
+            document.getElementById("login-button").classList.remove("loading");
+        }
     }
 </script>

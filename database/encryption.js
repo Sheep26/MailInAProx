@@ -3,7 +3,7 @@ import config from "../config.json" with { type: "json" };
 
 export class BcryptCache {
     constructor(string, hash) {
-        this.string = passwd;
+        this.string = string;
         this.hash = hash;
     }
 }

@@ -40,14 +40,21 @@ app.post("/api/send", async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-    const session = database.login(req.body.email, req.body.password);
+    const session = await database.login(req.body.email, req.body.password);
 
     if (!session)
         return res.sendStatus(401);
 
     sessionManager.addSession(session);
+
     res.cookie('session', session.session, { maxAge: 7.884e+9, httpOnly: true, secure: config.cookies_secure, sameSite: 'strict' });
     res.redirect("/");
+});
+
+app.post('/api/valid_login', async (req, res) => {
+    const session = await database.login(req.body.email, req.body.password);
+
+    res.sendStatus(session ? 200 : 401);
 });
 
 app.use(async (req, res, next) => {
