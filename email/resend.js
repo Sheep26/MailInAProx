@@ -19,6 +19,18 @@ export class EmailResend extends Email {
         console.log(`Email ${data.id} has been sent`);
     }
 
+    async sendHTML(from, to, reply_to, subject, html) {
+        const { data }  = await this.resend.emails.send({
+            from: from,
+            to: to,
+            replyTo: reply_to,
+            subject: subject,
+            html: html
+        });
+
+        console.log(`Email ${data.id} has been sent`);
+    }
+
     handle(req) {
         
     }

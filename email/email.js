@@ -3,7 +3,11 @@ export class Email {
         
     }
 
-    send(from, to, subject, reply_to, text) {
+    asyncsend(from, to, reply_to, subject, text) {
+
+    }
+
+    async sendHTML(from, to, reply_to, subject, html) {
 
     }
 
