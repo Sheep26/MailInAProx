@@ -2,7 +2,7 @@ import express from 'express';
 import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import config from "./config.json" with { type: "json" };
-import { Email, EmailResend, email_types } from './email.js';
+import { email_types } from './email/types.js';
 
 const app = express();
 const PORT = config.port | 8080;
