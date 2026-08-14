@@ -33,6 +33,16 @@ export class EmailResend extends Email {
 
     async handle(body) {
         const { data } = await this.resend.emails.receiving.get(body.data.email_id);
-        
+        const users = await this.database.getUsers();
+        let found = false;
+
+        for (let user of users)
+            if (data.to[0] == user.email)
+                found = true;
+
+        if (!found)
+            return;
+
+        this.database.addEmail(data.to[0], data.from, data.headers.return_path, JSON.stringify(data.bcc), JSON.stringify(data.cc), data.id, data.message_id, data.html_format, data.subject, data.text);
     }
 }
