@@ -9,9 +9,9 @@ services:
     ports:
       - "6780:8080"
 
-  mailonapidb:
+  mailonapi-db:
     image: mysql:latest
-    container_name: mailonapidb-db
+    container_name: mailonapi-db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: putyourshere
