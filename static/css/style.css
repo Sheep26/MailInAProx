@@ -5,12 +5,7 @@ html, body {
 
 body {
     scrollbar-width: thin;
-    background: linear-gradient(
-        135deg,
-        rgb(17, 17, 17) 0%,
-        rgb(17, 17, 17) 55%,
-        rgb(42, 38, 26) 100%
-    );
+    background: rgb(17, 17, 17);
     background-attachment: fixed;
 }
 
