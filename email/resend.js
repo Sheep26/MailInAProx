@@ -17,6 +17,7 @@ export class EmailResend extends Email {
         });
 
         console.log(`Email ${data.id} has been sent`);
+        super.send(from, to, reply_to, subject, text);
     }
 
     async sendHTML(from, to, reply_to, subject, html) {
@@ -29,6 +30,7 @@ export class EmailResend extends Email {
         });
 
         console.log(`Email ${data.id} has been sent`);
+        super.sendHTML(from, to, reply_to, subject, html);
     }
 
     async handle(body) {
