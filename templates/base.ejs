@@ -8,14 +8,18 @@
     </head>
 
     <body>
-        <main class="font">
+        <main class="font" id="main">
             <div class="flex row gap-2 grow">
                 <div class="card sidebar">
-        
+                    <div class="flex flex-end">
+                        <button class="compose" onclick="openCompose()">Compose</button>
+                    </div>
                 </div>
 
                 <%- include(content) %>
             </div>
         </main>
+
+        <script src="/static/js/base.js"></script>
     </body>
 </html>

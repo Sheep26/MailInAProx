@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+    <head>
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <main class="font column row compose-main" id="main">
+            <div class="flex row space-between">
+                <span>Send email</span>
+                <img src="/static/assets/close_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" onclick="closeMe()">
+            </div>
+
+            <form class="flex column gap-1 grow" action="/api/send" method="POST" onsubmit="hideMe()">
+                <input class="compose-text" type="text" name="to" placeholder="Recipient" required>
+                <input class="compose-text" type="text" name="subject" placeholder="Subject" required>
+                <textarea class="grow" class="compose-textarea" name="content" placeholder="Body" required></textarea>
+                <input type="submit" value="Send email">
+            </form>
+        </main>
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const compose = urlParams.get('compose');
+
+            function closeMe() {
+                window.parent.postMessage({
+                    type: "close-me",
+                    compose: compose
+                }, "*");
+            }
+
+            function hideMe() {
+                window.parent.postMessage({
+                    type: "hide-me",
+                    compose: compose
+                }, "*");
+            }
+        </script>
+    </body>
+</html>
