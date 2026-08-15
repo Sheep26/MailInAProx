@@ -67,6 +67,15 @@ app.get('/api/get_emails', async (req, res) => {
     res.send(await database.getUsersEmails(session.user_id));
 });
 
+app.get('/api/get_email', async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+
+    if (!session)
+        return res.sendStatus(401);
+
+    res.send(await database.getEmail(req.query.mail_id, session.email));
+});
+
 app.use(async (req, res, next) => {
     /*
     * This function catches all uncaught routes and sends either a 404 for if the content is missing or sends the requested webpage.

@@ -31,6 +31,15 @@ export class DatabaseManager {
         return rows;
     }
 
+    async getEmail(mail_id, email) {
+        const [rows] = await db.query('SELECT * FROM emails WHERE mail_id=? AND mail_to=?', [mail_id, email]);
+
+        if (rows.length > 0)
+            return rows[0];
+
+        return null;
+    }
+
     async getUsers() {
         const [rows] = await db.query("SELECT * FROM users");
 
