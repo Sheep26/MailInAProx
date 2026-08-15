@@ -4,6 +4,11 @@ async function loadInbox() {
 
     const inbox = document.getElementById("inbox");
 
+    if (!emails.length) {
+        inbox.innerHTML = `<span class="unselectable bold">Nothing yet</span>`;
+        return;
+    }
+
     var index = 0;
 
     const ms_in_minute = 60 * 1000;

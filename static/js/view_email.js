@@ -17,4 +17,17 @@ async function loadEmail() {
     `;
 }
 
+async function deleteEmail() {
+    const delete_req = await fetch(`/api/delete_email`, { method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            mail_id: urlParams.get('mail_id')
+        })});
+
+    if (delete_req.status == 200)
+        window.location = "/";
+}
+
 loadEmail();

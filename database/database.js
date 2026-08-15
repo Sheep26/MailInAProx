@@ -63,6 +63,10 @@ export class DatabaseManager {
         return rows[0];
     }
 
+    async deleteEmailRespectToUser(mail_id, user_email) {
+        await db.execute('DELETE FROM emails WHERE mail_id=? AND mail_to=?', [mail_id, user_email]);
+    }
+
     async login(email, password) {
         const user = await this.getUserEmail(email);
 

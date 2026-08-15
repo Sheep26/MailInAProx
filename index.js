@@ -76,6 +76,16 @@ app.get('/api/get_email', async (req, res) => {
     res.send(await database.getEmail(req.query.mail_id, session.user_id));
 });
 
+app.post('/api/delete_email', async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+
+    if (!session)
+        return res.sendStatus(401);
+
+    await database.deleteEmailRespectToUser(req.body.mail_id, session.user_id);
+    res.sendStatus(200);
+});
+
 app.use(async (req, res, next) => {
     /*
     * This function catches all uncaught routes and sends either a 404 for if the content is missing or sends the requested webpage.
