@@ -3,11 +3,9 @@ export function parseEmailAddress(value) {
     let values = {name: null, email: value.trim()};
 
     if (match) {
-        values.name = match[1].trim();
+        values.name = match[1].trim().replaceAll("\"", "");
         values.email = match[2].trim();
     }
-
-    console.log(values);
 
     return values;
 };
