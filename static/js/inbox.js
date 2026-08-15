@@ -1,15 +1,28 @@
 async function loadInbox() {
     const emails_req = await fetch('/api/get_emails');
     const emails = await emails_req.json();
+
     const inbox = document.getElementById("inbox");
+    const now = Date.now();
 
     var index = 0;
 
+    const ms_in_minute = 60 * 1000;
+    const ms_in_hour = 60 * ms_in_minute;
+    const ms_in_day = 24 * ms_in_hour;
+
     for (let email of emails) {
-        console.log(email);
         let element = document.createElement('div');
         let hr = document.createElement('hr');
         hr.style.width = "100%";
+
+        const time_diff = now - email.time;
+
+        const minutes_ago = Math.floor((time_diff & ms_in_hour) / ms_in_minute);
+        const hours_ago = Math.floor((time_diff % ms_in_day) / ms_in_hour);
+        const days_ago = Math.floor(time_diff / ms_in_day);
+
+        const time_thingy = days_ago ? `${days_ago} days ago` : hours_ago ? `${hours_ago} hours ago` : `${minutes_ago} minutes ago`;
 
         element.classList.add("email");
         element.classList.add("email-hoverable");
@@ -21,7 +34,7 @@ async function loadInbox() {
             <span>${email.subject}</span>
         </div>
 
-        <span></span>
+        <span>${time_thingy}</span>
         `;
 
         if (index > 0)
