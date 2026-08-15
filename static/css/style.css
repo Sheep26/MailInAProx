@@ -229,11 +229,28 @@ main {
     border-width: 2px;
 }
 
+.email-nav {
+    background-color: rgb(25, 25, 25);
+    border-radius: 12px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 8px;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.email-content {
+    padding: 8px;
+    padding-left: 20px;
+}
+
 input[type=submit] {
     color: white;
     background-color: rgb(0, 120, 240);
     border-radius: 12px;
-    padding: 16px 96px;;
+    padding: 16px 96px;
     border-style: none;
 }
 
