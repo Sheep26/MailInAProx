@@ -6,6 +6,8 @@ services:
     image: mailonapi:latest
     container_name: mailonapi
     restart: always
+    depends_on:
+      - mailonapi-db
     ports:
       - "6780:8080"
 
