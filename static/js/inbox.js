@@ -3,7 +3,6 @@ async function loadInbox() {
     const emails = await emails_req.json();
 
     const inbox = document.getElementById("inbox");
-    const now = Date.now();
 
     var index = 0;
 
@@ -18,9 +17,9 @@ async function loadInbox() {
         let hr = document.createElement('hr');
         hr.style.width = "100%";
 
-        const time_diff = now - email.time;
+        const time_diff = Date.now() - email.time;
 
-        const minutes_ago = Math.floor((time_diff & ms_in_hour) / ms_in_minute);
+        const minutes_ago = Math.floor((time_diff % ms_in_hour) / ms_in_minute);
         const hours_ago = Math.floor((time_diff % ms_in_day) / ms_in_hour);
         const days_ago = Math.floor(time_diff / ms_in_day);
 
