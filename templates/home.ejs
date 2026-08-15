@@ -1,9 +1,8 @@
-<script>
-    const payload = {
-        to: "23175@wc.school.nz",
-        subject: "Hello World",
-        content: "Hello World"
-    };
+<div class="card grow inbox scrollable">
+    <h3 class="text-left">Inbox</h3>
+    <hr style="color: white;">
 
-    fetch('/api/send', {method:"POST", headers:{'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
-</script>
+    <div class="flex column card inbox-card gap-2" id="inbox"></div>
+</div>
+
+<script src="/static/js/inbox.js"></script>

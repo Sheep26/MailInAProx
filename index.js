@@ -58,6 +58,15 @@ app.post('/api/valid_login', async (req, res) => {
     res.sendStatus(session ? 200 : 401);
 });
 
+app.get('/api/get_emails', async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+
+    if (!session)
+        return res.sendStatus(401);
+
+    res.send(await database.getUsersEmails(session.user_id));
+});
+
 app.use(async (req, res, next) => {
     /*
     * This function catches all uncaught routes and sends either a 404 for if the content is missing or sends the requested webpage.
@@ -69,7 +78,7 @@ app.use(async (req, res, next) => {
     const page = req.path.replace('/', '') || 'home';
 
     if (page != 'login' && (!req.cookies.session || !sessionManager.getSession(req.cookies.session)))
-        return res.redirect("/login");
+        return res.status(404).render('login', { title: 'Login', renderUtils: renderUtils });
 
     // Check if requested content exists.
     if (!existsSync(`templates/${page}.ejs`))

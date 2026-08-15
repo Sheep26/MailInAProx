@@ -1,45 +1,59 @@
-<div class="flex vcentered">
-    <div class="flex card column centered gap-1-5">
-        <span class="bold">Login</span>
+<!DOCTYPE html>
+<html lang="en-NZ">
+    <head>
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+    </head>
 
-        <form class="flex column gap-1-5 centered" action="/api/login" method="POST" onsubmit="checkLogin(event)">
-            <%- renderUtils.textField('email', 'Email') %>
-            <%- renderUtils.textField('password', 'Password', 'password') %>
+    <body>
+        <main class="font">
+            <div class="flex vcentered">
+                <div class="flex card column centered gap-1-5">
+                    <span class="bold">Login</span>
 
-            <input type="submit" id="login" value="Login">
-            <span style="display: none;" id="inc-login">Incorrect Login</span>
-            <a class="white bold no-decorations" href="/create_account">No account, create one.</a>
-        </form>
-    </div>
-</div>
+                    <form class="flex column gap-1-5 centered" action="/api/login" method="POST" onsubmit="checkLogin(event)">
+                        <%- renderUtils.textField('email', 'Email') %>
+                        <%- renderUtils.textField('password', 'Password', 'password') %>
 
-<script>
-    async function checkLogin(event) {
-        event.preventDefault();
+                        <input type="submit" id="login" value="Login">
+                        <span style="display: none;" id="inc-login">Incorrect Login</span>
+                        <a class="white bold no-decorations" href="/create_account">No account, create one.</a>
+                    </form>
+                </div>
+            </div>
+        </main>
 
-        document.getElementById("login").classList.add("loading");
+        <script>
+            async function checkLogin(event) {
+                event.preventDefault();
 
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+                document.getElementById("login").classList.add("loading");
 
-        const data = {
-            email: email,
-            password: password
-        }
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
 
-        const request = await fetch(`/api/valid_login`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+                const data = {
+                    email: email,
+                    password: password
+                }
 
-        if (request.status === 200)
-            event.target.submit();
-        else {
-            document.getElementById("inc-login").style.display = "block";
-            document.getElementById("login-button").classList.remove("loading");
-        }
-    }
-</script>
+                const request = await fetch(`/api/valid_login`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (request.status === 200)
+                    event.target.submit();
+                else {
+                    document.getElementById("inc-login").style.display = "block";
+                    document.getElementById("login-button").classList.remove("loading");
+                }
+            }
+        </script>
+    </body>
+</html>
