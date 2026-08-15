@@ -10,9 +10,15 @@
     <body>
         <main class="font" id="main">
             <div class="flex row gap-2 grow">
-                <div class="card sidebar">
+                <div class="card sidebar flex column gap-2">
                     <div class="flex flex-end">
                         <button class="compose" onclick="openCompose()">Compose</button>
+                    </div>
+
+                    <div class="flex column">
+                        <a href="/">Inbox</a>
+                        <hr style="width: 100%;">
+                        <a href="/sent">Sent</a>
                     </div>
                 </div>
 

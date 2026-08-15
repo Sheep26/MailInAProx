@@ -126,6 +126,12 @@ main {
     flex-shrink: 1;
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
+    color: white;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
 }
 
 .inbox {
