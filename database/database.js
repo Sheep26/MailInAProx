@@ -21,7 +21,7 @@ export class DatabaseManager {
             html_format,
             subject,
             content,
-            new Date().now()
+            Date.now()
         ]);
     }
 
