@@ -73,7 +73,7 @@ app.get('/api/get_email', async (req, res) => {
     if (!session)
         return res.sendStatus(401);
 
-    res.send(await database.getEmail(req.query.mail_id, session.email));
+    res.send(await database.getEmail(req.query.mail_id, session.user_id));
 });
 
 app.use(async (req, res, next) => {

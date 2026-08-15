@@ -11,6 +11,8 @@ async function loadInbox() {
     const ms_in_hour = 60 * ms_in_minute;
     const ms_in_day = 24 * ms_in_hour;
 
+    emails.reverse();
+
     for (let email of emails) {
         let element = document.createElement('div');
         let hr = document.createElement('hr');
@@ -27,6 +29,8 @@ async function loadInbox() {
         element.classList.add("email");
         element.classList.add("email-hoverable");
         element.classList.add("unselectable");
+
+        element.onclick = function() {window.location = `/api/get_email?mail_id=${email.mail_id}`};
 
         element.innerHTML = `
         <div class="flex column">
