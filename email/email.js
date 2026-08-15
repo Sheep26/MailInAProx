@@ -7,6 +7,8 @@ export function parseEmailAddress(value) {
         values.email = match[2].trim();
     }
 
+    console.log(values);
+
     return values;
 };
 

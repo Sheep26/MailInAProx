@@ -34,7 +34,7 @@ async function loadInbox() {
 
         element.innerHTML = `
         <div class="flex column">
-            <span>${email.mail_from}</span>
+            <span>${email.name ?? email.mail_from}</span>
             <span>${email.subject}</span>
         </div>
 

@@ -13,7 +13,7 @@ export class DatabaseManager {
         await db.execute('INSERT INTO emails (mail_to, mail_from, name_from, reply_to, bcc, cc, mail_id, message_id, html_format, subject, content, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             to,
             from,
-            name_from,
+            name_from ?? null,
             reply_to,
             bcc,
             cc,
