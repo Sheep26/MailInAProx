@@ -15,14 +15,16 @@ async function loadEmail() {
 
     main_element.innerHTML = `
     <span>${email.content}</span>
-    ${email.attachments ? function () {
-        let out = "";
+    <div class='flex column gap-1'>
+        ${email.attachments ? function () {
+            let out = "<hr style='width: 100%;'><span>Attachments</span>";
 
-        for (let attachment of email.attachments)
-            out += `<a href='/attachment/${email.mail_id}/${attachment.id}'>${attachment.filename}</a>`;
+            for (let attachment of email.attachments)
+                out += `<a href='/attachment/${email.mail_id}/${attachment.id}'>${attachment.filename}</a>`;
 
-        return out;
-    }() : ""}
+            return out;
+        }() : ""}
+    </div>
     `;
 }
 
