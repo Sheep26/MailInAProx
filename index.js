@@ -110,11 +110,6 @@ app.get('/attachment/:emailId/:attachmentId', async (req, res) => {
     if (!session)
         return res.sendStatus(401);
 
-    const email = await database.getEmail(email_id, session.user_id);
-
-    if (!email)
-        return res.sendStatus(403);
-
     try {
         const { data, error } = await email.getAttatchment(email_id, attachment_id);
 

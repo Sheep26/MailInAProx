@@ -10,10 +10,19 @@ async function loadEmail() {
 
     email_subject.innerText = email.subject;
     email_name.innerText = email.name_from ?? email.mail_from;
-    email_email.innerText = email.name_from ? `<${email.mail_from}>` : "d";
+    email_email.innerText = email.name_from ? `<${email.mail_from}>` : "";
+    console.log(email.attachments);
 
     main_element.innerHTML = `
     <span>${email.content}</span>
+    ${email.attachments ? function () {
+        let out = "";
+
+        for (let attachment of email.attachments)
+            out += `<a href='/attachment/${email.mail_id}/${attachment.id}'>${attachment.filename}</a>`;
+
+        return out;
+    }() : ""}
     `;
 }
 
