@@ -41,6 +41,16 @@ export class DatabaseManager {
         return null;
     }
 
+    async getSentEmail(sent_id, email) {
+        const user = await this.getUserEmail(email);
+        const [rows] = await db.query('SELECT * FROM sent WHERE sent_id=? AND mail_from=?', [sent_id, `${user.username} <${user.email}>`]);
+
+        if (rows.length > 0)
+            return rows[0];
+
+        return null;
+    }
+
     async getUsers() {
         const [rows] = await db.query("SELECT * FROM users");
 
@@ -78,6 +88,13 @@ export class DatabaseManager {
             content,
             Date.now()
         ]);
+    }
+
+    async getSent(email) {
+        const user = await this.getUserEmail(email);
+        const [rows] = await db.query('SELECT * FROM sent WHERE mail_from=?', [`${user.username} <${user.email}>`]);
+
+        return rows;
     }
 
     async login(email, password) {

@@ -75,6 +75,14 @@ app.get('/api/get_email', async (req, res) => {
 
     res.send(await database.getEmail(req.query.mail_id, session.user_id));
 });
+app.get('/api/get_sent_email', async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+
+    if (!session)
+        return res.sendStatus(401);
+
+    res.send(await database.getSentEmail(req.query.sent_id, session.user_id));
+});
 
 app.post('/api/delete_email', async (req, res) => {
     const session = await sessionManager.getSession(req.cookies.session);
@@ -84,6 +92,15 @@ app.post('/api/delete_email', async (req, res) => {
 
     await database.deleteEmailRespectToUser(req.body.mail_id, session.user_id);
     res.sendStatus(200);
+});
+
+app.get('/api/get_sent', async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+
+    if (!session)
+        return res.sendStatus(401);
+
+    res.send(await database.getSent(session.user_id));
 });
 
 app.use(async (req, res, next) => {
