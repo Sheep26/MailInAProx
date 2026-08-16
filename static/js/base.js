@@ -41,6 +41,9 @@ function hideCompose(compose) {
 }
 
 window.addEventListener('message', function(event) {
+    if (event.origin != window.location.origin)
+        return;
+
     if (event.data.type === 'close-me')
         closeCompose(event.data.compose);
 

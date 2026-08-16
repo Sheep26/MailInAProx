@@ -30,14 +30,14 @@
                 window.parent.postMessage({
                     type: "close-me",
                     compose: compose
-                }, "*");
+                }, window.location.origin);
             }
 
             function hideMe() {
                 window.parent.postMessage({
                     type: "hide-me",
                     compose: compose
-                }, "*");
+                }, window.location.origin);
             }
         </script>
     </body>
