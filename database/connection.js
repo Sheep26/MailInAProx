@@ -13,7 +13,7 @@ export async function setDB(name) {
     });
 
     await db.execute('CREATE TABLE IF NOT EXISTS users (user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username TEXT NOT NULL, passwd TEXT NOT NULL, email TEXT NOT NULL)');
-    await db.execute('CREATE TABLE IF NOT EXISTS emails (email_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mail_to TEXT NOT NULL, mail_from TEXT NOT NULL, name_from TEXT, reply_to TEXT NOT NULL, bcc TEXT NOT NULL, cc TEXT NOT NULL, mail_id TEXT NOT NULL, message_id TEXT NOT NULL, subject TEXT, content TEXT, html_format TEXT, time BIGINT NOT NULL)');
+    await db.execute('CREATE TABLE IF NOT EXISTS emails (email_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mail_to TEXT NOT NULL, mail_from TEXT NOT NULL, name_from TEXT, reply_to TEXT NOT NULL, bcc TEXT NOT NULL, cc TEXT NOT NULL, mail_id TEXT NOT NULL, message_id TEXT NOT NULL, subject TEXT, content TEXT, attachments JSON, html_format TEXT, time BIGINT NOT NULL)');
     await db.execute('CREATE TABLE IF NOT EXISTS sent (sent_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mail_to TEXT NOT NULL, mail_from TEXT NOT NULL, reply_to TEXT NOT NULL, bcc TEXT, cc TEXT, subject TEXT, content TEXT, time BIGINT NOT NULL)');
 }
 

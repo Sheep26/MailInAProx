@@ -103,6 +103,26 @@ app.get('/api/get_sent', async (req, res) => {
     res.send(await database.getSent(session.user_id));
 });
 
+app.get('/attachment/:emailId/:attachmentId', async (req, res) => {
+    try {
+        const { email_id, attachment_id } = req.params;
+        const { data, error } = await email.getAttatchment(email_id, attachment_id);
+
+        if (error) {
+            console.error(error);
+
+            return res.status(500).send('Failed to get attachment');
+        }
+
+        // Resend gives you a temporary download URL
+        return res.redirect(data.download_url);
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).send('Failed to download attachment');
+    }
+});
+
 app.use(async (req, res, next) => {
     /*
     * This function catches all uncaught routes and sends either a 404 for if the content is missing or sends the requested webpage.

@@ -42,7 +42,11 @@ export class EmailResend extends Email {
 
         let parsed = parseEmailAddress(data.headers.from);
 
-        this.database.addEmail(data.to[0], parsed.email, parsed.name, data.headers['return-path'], JSON.stringify(data.bcc), JSON.stringify(data.cc), data.id, data.message_id, data.html_format, data.subject, data.html);
+        this.database.addEmail(data.to[0], parsed.email, parsed.name, data.headers['return-path'], JSON.stringify(data.bcc), JSON.stringify(data.cc), data.id, data.message_id, data.html_format, data.subject, data.html, data.attachments);
         console.log(`Email ${data.id} has been recieved from ${data.headers.from}`);
+    }
+
+    async getAttatchment(email_id, attachment_id) {
+        return await this.resend.emails.receiving.attachments.get({email_id, id: attachment_id});
     }
 }

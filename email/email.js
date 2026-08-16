@@ -26,4 +26,8 @@ export class Email {
     async handle(req) {
 
     }
+
+    async getAttatchment(email_id, attachment_id) {
+        
+    }
 }
