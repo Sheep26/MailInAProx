@@ -114,7 +114,7 @@ app.use(async (req, res, next) => {
     const page = req.path.replace('/', '') || 'home';
 
     if (page != 'login' && (!req.cookies.session || !sessionManager.getSession(req.cookies.session)))
-        return res.status(404).render('login', { title: 'Login', renderUtils: renderUtils });
+        return res.render('login', { title: 'Login', renderUtils: renderUtils });
 
     // Check if requested content exists.
     if (!existsSync(`templates/${page}.ejs`))
