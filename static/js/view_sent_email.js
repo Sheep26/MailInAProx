@@ -10,7 +10,7 @@ async function loadEmail() {
 
     email_subject.innerText = email.subject;
     email_name.innerText = email.name_from ?? email.mail_from;
-    email_email.innerText = email.name_from ? `<${email.mail_from}>` : "d";
+    email_email.innerText = email.name_from ? `<${email.mail_from}>` : "";
 
     main_element.innerHTML = `
     <span>${email.content}</span>
