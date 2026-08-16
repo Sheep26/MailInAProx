@@ -104,8 +104,18 @@ app.get('/api/get_sent', async (req, res) => {
 });
 
 app.get('/attachment/:emailId/:attachmentId', async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+    const { email_id, attachment_id } = req.params;
+
+    if (!session)
+        return res.sendStatus(401);
+
+    const email = await database.getEmail(email_id, session.user_id);
+
+    if (!email)
+        return res.sendStatus(403);
+
     try {
-        const { email_id, attachment_id } = req.params;
         const { data, error } = await email.getAttatchment(email_id, attachment_id);
 
         if (error) {
