@@ -47,6 +47,9 @@ export class EmailResend extends Email {
     }
 
     async getAttatchment(email_id, attachment_id) {
-        return await this.resend.emails.receiving.attachments.get({emailId: email_id, id: attachment_id});
+        const { data, error } = await this.resend.emails.receiving.attachments.get({emailId: email_id, id: attachment_id});
+        const download_url = data.download_url;
+
+        return { download_url, error };
     }
 }

@@ -116,7 +116,7 @@ app.get('/attachment/:email_id/:attachment_id', async (req, res) => {
         return res.sendStatus(403);
 
     try {
-        const { data, error } = await email.getAttatchment(email_id, attachment_id);
+        const { download_url, error } = await email.getAttatchment(email_id, attachment_id);
 
         if (error) {
             console.error(error);
@@ -124,8 +124,7 @@ app.get('/attachment/:email_id/:attachment_id', async (req, res) => {
             return res.status(500).send('Failed to get attachment');
         }
 
-        // Resend gives you a temporary download URL
-        return res.redirect(data.download_url);
+        return res.redirect(download_url);
     } catch (err) {
         console.error(err);
 
