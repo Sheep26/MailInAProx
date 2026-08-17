@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+    <head>
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <main class="font column row compose-main" id="main">
+            <div class="flex row space-between">
+                <span>Reply to - <span id="from"></span></span>
+                <img src="/static/assets/close_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" onclick="closeMe()">
+            </div>
+
+            <form class="flex column gap-1 grow" action="/api/reply" method="POST" onsubmit="hideMe()">
+                <input type="text" name="mail_id" id="mail_id" style="display: none;">
+                <textarea class="grow" class="compose-textarea" name="content" id="content" placeholder="Body" required></textarea>
+                <input type="submit" value="Reply to email">
+            </form>
+        </main>
+
+        <script src="/static/js/reply.js"></script>
+    </body>
+</html>

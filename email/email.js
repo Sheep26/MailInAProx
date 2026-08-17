@@ -27,6 +27,10 @@ export class Email {
 
     }
 
+    async reply(user, mail_id, content) {
+
+    }
+
     async getAttatchment(email_id, attachment_id) {
         
     }

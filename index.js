@@ -36,7 +36,20 @@ app.post("/api/send", async (req, res) => {
         return res.sendStatus(401);
 
     const user = await database.getUserEmail(session.user_id);
+
     await email.send(`${user.username} <${session.user_id}>`, req.body.to, session.user_id, req.body.subject, req.body.content);
+    res.redirect('/');
+});
+
+app.post("/api/reply", async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+
+    if (!session)
+        return res.sendStatus(401);
+
+    const user = await database.getUserEmail(session.user_id);
+
+    await email.reply(user, req.body.mail_id, req.body.content);
     res.redirect('/');
 });
 

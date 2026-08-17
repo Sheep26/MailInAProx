@@ -1,8 +1,9 @@
 const urlParams = new URLSearchParams(window.location.search);
+let email;
 
 async function loadEmail() {
     const email_req = await fetch(`/api/get_email?mail_id=${urlParams.get('mail_id')}`);
-    const email = await email_req.json();
+    email = await email_req.json();
     const main_element = document.getElementById('email');
     const email_subject = document.getElementById('email-subject');
     const email_name = document.getElementById('email-name');
@@ -26,6 +27,10 @@ async function loadEmail() {
         }() : ""}
     </div>
     `;
+}
+
+function replyEmail() {
+    openReply(email);
 }
 
 async function deleteEmail() {

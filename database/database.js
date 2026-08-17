@@ -9,8 +9,8 @@ export class DatabaseManager {
         initDB();
     }
 
-    async addEmail(to, from, name_from, reply_to, bcc, cc, mail_id, message_id, html_format, subject, content, attachments) {
-        await db.execute('INSERT INTO emails (mail_to, mail_from, name_from, reply_to, bcc, cc, mail_id, message_id, html_format, subject, content, attachments, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+    async addEmail(to, from, name_from, reply_to, bcc, cc, mail_id, message_id, html_format, subject, content, attachments, references) {
+        await db.execute('INSERT INTO emails (mail_to, mail_from, name_from, reply_to, bcc, cc, mail_id, message_id, html_format, subject, content, attachments, email_references, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             to,
             from,
             name_from ?? null,
@@ -23,6 +23,7 @@ export class DatabaseManager {
             subject,
             content,
             attachments,
+            references,
             Date.now()
         ]);
     }

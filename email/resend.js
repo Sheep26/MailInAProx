@@ -33,6 +33,28 @@ export class EmailResend extends Email {
         super.sendHTML(from, to, reply_to, subject, html);
     }
 
+    async reply(user, mail_id, content) {
+        const mail = await this.database.getEmail(mail_id, user.email);
+
+        if (!mail)
+            return;
+
+        const { data }  = await this.resend.emails.send({
+            from: `${user.username} <${user.email}>`,
+            to: mail.reply_to,
+            replyTo: user.email,
+            subject: `Re: ${mail.subject}`,
+            text: content,
+            headers: {
+                'In-Reply-To': mail.message_id,
+                'References': mail.email_references
+            }
+        });
+
+        console.log(`Email ${data.id} has been sent`);
+        super.send(user.email, mail.reply_to, user.email, `Re: ${mail.subject}`, content);
+    }
+
     async handle(body) {
         const { data } = await this.resend.emails.receiving.get(body.data.email_id);
         const user = await this.database.getUserEmail(data.to[0]);
@@ -42,7 +64,7 @@ export class EmailResend extends Email {
 
         let parsed = parseEmailAddress(data.headers.from);
 
-        this.database.addEmail(data.to[0], parsed.email, parsed.name, data.headers['return-path'], JSON.stringify(data.bcc), JSON.stringify(data.cc), data.id, data.message_id, data.html_format, data.subject, data.html, data.attachments);
+        this.database.addEmail(data.to[0], parsed.email, parsed.name, data.headers['return-path'], JSON.stringify(data.bcc), JSON.stringify(data.cc), data.id, data.message_id, data.html_format, data.subject, data.html, data.attachments, data.headers.references ?? null);
         console.log(`Email ${data.id} has been recieved from ${data.headers.from}`);
     }
 

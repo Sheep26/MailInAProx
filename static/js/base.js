@@ -16,6 +16,20 @@ function openCompose() {
     main.appendChild(element);
 }
 
+function openReply(email) {
+    let element = document.createElement('iframe');
+    element.id = `compose-${composeIndex}`;
+    element.classList.add('compose-panel');
+    element.src = `/static/html/reply.html?compose=${composeIndex}&mail_id=${email.mail_id}&from=${email.mail_from}`;
+
+    element.bottom = 0;
+    element.style.right = `${42 * openComposes}svw`;
+
+    composeIndex++;
+    openComposes++;
+    main.appendChild(element);
+}
+
 function moveComposes() {
     let elements = main.querySelectorAll('iframe');
     let found_composes = 0;
