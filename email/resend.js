@@ -47,7 +47,7 @@ export class EmailResend extends Email {
             text: content,
             headers: {
                 'In-Reply-To': mail.message_id,
-                'References': mail.email_references
+                'References': [...mail.email_references, mail.message_id].join(' ')
             }
         });
 
