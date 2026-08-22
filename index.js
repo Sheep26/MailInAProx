@@ -107,6 +107,16 @@ app.post('/api/delete_email', async (req, res) => {
     res.sendStatus(200);
 });
 
+app.post('/api/delete_sent_email', async (req, res) => {
+    const session = await sessionManager.getSession(req.cookies.session);
+
+    if (!session)
+        return res.sendStatus(401);
+
+    await database.deleteSentEmailRespectToUser(req.body.sent_id, session.user_id);
+    res.sendStatus(200);
+});
+
 app.get('/api/get_sent', async (req, res) => {
     const session = await sessionManager.getSession(req.cookies.session);
 

@@ -79,6 +79,12 @@ export class DatabaseManager {
         await db.execute('DELETE FROM emails WHERE mail_id=? AND mail_to=?', [mail_id, user_email]);
     }
 
+    async deleteSentEmailRespectToUser(sent_id, user_email) {
+        const user = await this.getUserEmail(user_email);
+
+        await db.execute('DELETE FROM sent WHERE sent_id=? AND mail_from=?', [sent_id, `${user.username} <${user.email}>`]);
+    }
+
     async sendEmail(mail_to, mail_from, reply_to, bcc, cc, subject, content) {
         await db.execute('INSERT INTO sent (mail_to, mail_from, reply_to, bcc, cc, subject, content, time) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [
             mail_to,
